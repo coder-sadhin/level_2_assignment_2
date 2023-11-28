@@ -1,3 +1,5 @@
+import { Model } from 'mongoose';
+
 // export interface TOrder {
 //   productName: string;
 //   price: number;
@@ -26,4 +28,8 @@ export interface TUser {
   hobbies: string[];
   address: TAddress;
   // orders?: TOrder[];
+}
+
+export interface StudentModel extends Model<TUser> {
+  isUserExits(userId: number): Promise<TUser | null>;
 }

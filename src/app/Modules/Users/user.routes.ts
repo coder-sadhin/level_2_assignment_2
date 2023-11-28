@@ -5,5 +5,8 @@ import { UserControllers } from './user.controllers';
 const router = express.Router();
 
 router.post('/', UserControllers.createUser);
+router.get('/', UserControllers.getAllUser);
+router.get('/:userId', UserControllers.getUserByID);
+router.delete('/:userId', UserControllers.deleteUserByID);
 
 export const StudentRoute = router;

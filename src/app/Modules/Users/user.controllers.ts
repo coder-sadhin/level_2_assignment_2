@@ -17,7 +17,70 @@ const createUser = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(400).json({
       success: false,
+      message: 'User created failed',
+      error: {
+        code: 404,
+        description: error.message || 'User created failed',
+      },
+    });
+  }
+};
+
+const getAllUser = async (req: Request, res: Response) => {
+  try {
+    const result = await UserServices.getAllUserFromDB();
+
+    res.status(200).json({
+      success: true,
+      message: 'Users fetched successfully!',
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
       message: 'User not found',
+      error: {
+        code: 404,
+        description: error.message || 'User not found',
+      },
+    });
+  }
+};
+
+const getUserByID = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const result = await UserServices.getUserByID(userId);
+    res.status(200).json({
+      success: true,
+      message: 'Users fetched successfully!',
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: 'User not found',
+      error: {
+        code: 404,
+        description: error.message || 'User not found',
+      },
+    });
+  }
+};
+
+const deleteUserByID = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    await UserServices.deleteUserByID(userId);
+    res.status(200).json({
+      success: true,
+      message: 'User Successfully Deleted',
+      data: null,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: 'Delete not possible',
       error: {
         code: 404,
         description: error.message || 'User not found',
@@ -28,4 +91,7 @@ const createUser = async (req: Request, res: Response) => {
 
 export const UserControllers = {
   createUser,
+  getAllUser,
+  getUserByID,
+  deleteUserByID,
 };
