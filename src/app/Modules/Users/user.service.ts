@@ -8,7 +8,6 @@ const createUserIntoDB = async (userData: TUser) => {
   if (await UserModel.isUserExits(userData.userId)) {
     throw new Error('User already exists');
   }
-
   const result = await UserModel.create(userData);
   return result;
 };

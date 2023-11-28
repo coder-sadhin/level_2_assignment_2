@@ -1,14 +1,13 @@
 import { model, Schema } from 'mongoose';
 import bcrypt from 'bcrypt';
 import config from '../../config';
-// import { TAddress, TName, TOrder, TUser } from './user.interface';
-import { StudentModel, TAddress, TName, TUser } from './user.interface';
+import { StudentModel, TAddress, TName, TOrder, TUser } from './user.interface';
 
-// const orderSchema = new Schema<TOrder>({
-//   productName: { type: String, required: true },
-//   price: { type: Number, required: true },
-//   quantity: { type: Number, required: true },
-// });
+const orderSchema = new Schema<TOrder>({
+  productName: { type: String, required: true },
+  price: { type: Number, required: true },
+  quantity: { type: Number, required: true },
+});
 
 const nameSchema = new Schema<TName>({
   firstName: { type: String, required: true },
@@ -32,7 +31,7 @@ const userSchema = new Schema<TUser, StudentModel>(
     isActive: { type: Boolean, required: true },
     hobbies: { type: [String], required: true },
     address: { type: addressSchema, required: true },
-    //   orders: { type: [orderSchema] },
+    orders: { type: [orderSchema], required: false },
   },
   {
     toJSON: {
@@ -54,6 +53,11 @@ userSchema.pre('save', async function (next) {
     userData.password,
     Number(config.bcrypt_salt_rounds),
   );
+  next();
+});
+
+userSchema.post('save', function (doc, next) {
+  doc.password = '';
   next();
 });
 

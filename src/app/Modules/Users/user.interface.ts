@@ -1,10 +1,10 @@
 import { Model } from 'mongoose';
 
-// export interface TOrder {
-//   productName: string;
-//   price: number;
-//   quantity: number;
-// }
+export interface TOrder {
+  productName: string;
+  price: number;
+  quantity: number;
+}
 
 export interface TName {
   firstName: string;
@@ -27,7 +27,7 @@ export interface TUser {
   isActive: boolean;
   hobbies: string[];
   address: TAddress;
-  // orders?: TOrder[];
+  orders?: TOrder[];
 }
 
 export interface StudentModel extends Model<TUser> {

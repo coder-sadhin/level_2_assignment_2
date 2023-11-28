@@ -19,11 +19,11 @@ const addressValidationSchema = z.object({
   country: z.string().min(1).max(255),
 });
 
-// const orderValidationSchema = z.object({
-//   productName: z.string().min(1).max(255),
-//   price: z.number().min(0),
-//   quantity: z.number().min(1),
-// });
+export const orderValidationSchema = z.object({
+  productName: z.string().min(1).max(255),
+  price: z.number().min(0),
+  quantity: z.number().min(1),
+});
 
 const passwordValidationSchema = z
   .string()
@@ -36,7 +36,7 @@ const passwordValidationSchema = z
     },
   );
 
-const userValidationSchema = z.object({
+export const userValidationSchema = z.object({
   userId: z.number(),
   username: z.string(),
   password: passwordValidationSchema,
@@ -48,7 +48,5 @@ const userValidationSchema = z.object({
     message: 'At least one hobby is required',
   }),
   address: addressValidationSchema,
-  //   orders: z.array(orderValidationSchema),
+  orders: z.array(orderValidationSchema).optional(),
 });
-
-export default userValidationSchema;
