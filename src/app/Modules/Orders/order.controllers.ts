@@ -49,7 +49,29 @@ const getAllOrder = async (req: Request, res: Response) => {
   }
 };
 
+const getTotalOrderPrice = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const result = await OrderServices.getTotalOrderPriceFromDB(userId);
+    res.status(200).json({
+      success: true,
+      message: 'Total price calculated successfully!',
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: 'Price calculate not possible',
+      error: {
+        code: 404,
+        description: error.message || 'Price calculate not possible',
+      },
+    });
+  }
+};
+
 export const OrderControllers = {
   createOrder,
   getAllOrder,
+  getTotalOrderPrice,
 };

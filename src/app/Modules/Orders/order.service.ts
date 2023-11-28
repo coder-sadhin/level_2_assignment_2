@@ -24,7 +24,28 @@ const getAllOrderFromDB = async (userId: string) => {
   return result?.orders;
 };
 
+const getTotalOrderPriceFromDB = async (userId: string) => {
+  const id = Number(userId);
+  const userData = await UserModel.findOne({ userId: id });
+
+  if (!userData) {
+    throw new Error('User not exists');
+  }
+
+  if (userData?.orders?.length === 0) {
+    throw new Error('Orders not found');
+  }
+
+  const totalPrice = userData?.orders?.reduce(
+    (accumulator: number, order) => accumulator + order.price,
+    0,
+  );
+
+  return totalPrice;
+};
+
 export const OrderServices = {
   createOrderIntoDB,
   getAllOrderFromDB,
+  getTotalOrderPriceFromDB,
 };
