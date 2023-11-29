@@ -22,6 +22,14 @@ const getUserByID = async (id: string) => {
   return result;
 };
 
+const updateUserByID = async (id: string, updateData: any) => {
+  if (!(await UserModel.findOne({ userId: id }))) {
+    throw new Error('User not exists');
+  }
+  const result = await UserModel.updateOne({ userId: id }, updateData);
+  return await UserModel.findOne({ userId: id });
+};
+
 const deleteUserByID = async (id: string) => {
   if (!(await UserModel.findOne({ userId: id }))) {
     throw new Error('User not exists');
@@ -35,4 +43,5 @@ export const UserServices = {
   getAllUserFromDB,
   getUserByID,
   deleteUserByID,
+  updateUserByID,
 };

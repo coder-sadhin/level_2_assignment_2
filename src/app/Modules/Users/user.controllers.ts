@@ -68,6 +68,29 @@ const getUserByID = async (req: Request, res: Response) => {
   }
 };
 
+const updateUserByID = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const updateData = req.body;
+    const result = await UserServices.updateUserByID(userId, updateData);
+
+    res.status(200).json({
+      success: true,
+      message: 'User updated successfully!',
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: 'User update not possible',
+      error: {
+        code: 404,
+        description: error.message || 'User update not possible',
+      },
+    });
+  }
+};
+
 const deleteUserByID = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
@@ -94,4 +117,5 @@ export const UserControllers = {
   getAllUser,
   getUserByID,
   deleteUserByID,
+  updateUserByID,
 };
