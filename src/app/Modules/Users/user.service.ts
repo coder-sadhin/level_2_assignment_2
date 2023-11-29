@@ -27,7 +27,10 @@ const updateUserByID = async (id: string, updateData: any) => {
     throw new Error('User not exists');
   }
   const result = await UserModel.updateOne({ userId: id }, updateData);
-  return await UserModel.findOne({ userId: id }).select('-password -orders');
+  return await UserModel.findOne({ userId: id }).select({
+    password: 0,
+    orders: 0,
+  });
 };
 
 const deleteUserByID = async (id: string) => {
