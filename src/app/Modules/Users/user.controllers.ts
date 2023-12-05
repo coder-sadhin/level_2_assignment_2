@@ -4,9 +4,8 @@ import { userValidationSchema } from './user.velidators';
 
 const createUser = async (req: Request, res: Response) => {
   try {
-    const userData = req.body.user;
+    const userData = req.body;
     const zodPerseData = userValidationSchema.parse(userData);
-
     const result = await UserServices.createUserIntoDB(zodPerseData);
 
     res.status(200).json({

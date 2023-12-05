@@ -5,12 +5,7 @@ const userNameValidationSchema = z.object({
     .string()
     .min(1, { message: 'firstName is required' })
     .max(20, { message: 'First Name should not be more than 20 characters' }),
-  lastName: z
-    .string()
-    .min(1, { message: 'lastName is required' })
-    .refine((value) => /^[a-zA-Z]+$/.test(value), {
-      message: '{value} is not valid',
-    }),
+  lastName: z.string().min(1, { message: 'lastName is required' }),
 });
 
 const addressValidationSchema = z.object({
@@ -27,14 +22,14 @@ export const orderValidationSchema = z.object({
 
 const passwordValidationSchema = z
   .string()
-  .min(8, { message: 'Password must be at least 8 characters long' })
-  .regex(
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()-=_+{};':"\\|,.<>/?]).*$/,
-    {
-      message:
-        'Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character',
-    },
-  );
+  .min(8, { message: 'Password must be at least 8 characters long' });
+// .regex(
+//   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()-=_+{};':"\\|,.<>/?]).*$/,
+//   {
+//     message:
+//       'Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character',
+//   },
+// );
 
 export const userValidationSchema = z.object({
   userId: z.number(),
